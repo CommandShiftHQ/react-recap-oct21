@@ -20,9 +20,9 @@ export const useFetch = (url) => {
       .catch(() => setRequestState('FAILED'));
   }, [url]);
 
-  const updateRequest = (id, request) => {
-    fetch(`${process.env.REACT_APP_API_ENDPOINT}/${id}`, {
-      method: 'PUT',
+  const updateRequest = async (id, request) => {
+    await fetch(`${process.env.REACT_APP_API_ENDPOINT}/${id}`, {
+      method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(request),
     });
