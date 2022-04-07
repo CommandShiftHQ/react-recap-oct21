@@ -20,5 +20,17 @@ export const useFetch = (url) => {
       .catch(() => setRequestState('FAILED'));
   }, [url]);
 
-  return [requestState, requestResponse, setRequestResponse];
+  const updateRequest = (id, request) => {
+    fetch(`${process.env.REACT_APP_API_ENDPOINT}/${id}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(request),
+    });
+
+    setRequestResponse((previous) => {
+      return previous.map((object) => (object.id === id ? request : object));
+    });
+  };
+
+  return [requestState, requestResponse, updateRequest];
 };

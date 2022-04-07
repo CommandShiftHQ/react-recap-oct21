@@ -5,20 +5,10 @@ import TaskList from './components/TaskList';
 import { useFetch } from './hooks/useFetch';
 
 const App = () => {
-  const [state, tasks, setTasks] = useFetch(process.env.REACT_APP_API_ENDPOINT);
+  const [state, tasks, update] = useFetch(process.env.REACT_APP_API_ENDPOINT);
 
-  const updateTask = (updatedTask) => {
-    fetch(`${process.env.REACT_APP_API_ENDPOINT}/${updatedTask.id}`, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(updatedTask),
-    });
-
-    setTasks((previous) => {
-      return previous.map((task) =>
-        task.id === updatedTask.id ? updatedTask : task,
-      );
-    });
+  const updateTask = (task) => {
+    update(task.id, task);
   };
 
   return (
