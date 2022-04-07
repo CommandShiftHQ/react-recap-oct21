@@ -32,5 +32,18 @@ export const useFetch = (url) => {
     });
   };
 
-  return [requestState, requestResponse, updateRequest];
+  const addRequest = async (request) => {
+    const response = await fetch(`${process.env.REACT_APP_API_ENDPOINT}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(request),
+    });
+    const json = await response.json();
+
+    setRequestResponse((previous) => {
+      return [...previous, json];
+    });
+  };
+
+  return [requestState, requestResponse, updateRequest, addRequest];
 };
