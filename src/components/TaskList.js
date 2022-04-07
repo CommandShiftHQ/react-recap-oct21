@@ -1,17 +1,17 @@
-import { useState } from 'react';
 import Task from './Task';
+import { useInput } from '../hooks/useInput';
 
 const TaskList = ({ tasks, updateTask, addTask }) => {
-  const [task, setTask] = useState('');
+  const [{ task }, update, reset] = useInput({ task: '' });
 
   const handleInputChange = (event) => {
-    setTask(event.target.value);
+    update(event);
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
     addTask(task);
-    setTask('');
+    reset();
   };
 
   return (
