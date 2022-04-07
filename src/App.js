@@ -1,25 +1,20 @@
-import logo from './logo.svg';
-import './App.css';
+import Loading from './components/Loading';
+import Error from './components/Error';
+import TaskList from './components/TaskList';
 
-function App() {
+import { useFetch } from './hooks/useFetch';
+
+const App = () => {
+  const [state, tasks] = useFetch(process.env.REACT_APP_API_ENDPOINT);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <h1>TODO List</h1>
+      {state === 'PENDING' && <Loading />}
+      {state === 'SUCCESS' && <TaskList tasks={tasks} />}
+      {state === 'FAILED' && <Error>Something went wrong</Error>}
+    </>
   );
-}
+};
 
 export default App;
