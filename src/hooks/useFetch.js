@@ -5,6 +5,10 @@ export const useFetch = (url) => {
   const [requestState, setRequestState] = useState('INITIAL');
 
   useEffect(() => {
+    if (!url) {
+      return;
+    }
+
     setRequestState('PENDING');
 
     fetch(url)
@@ -16,5 +20,5 @@ export const useFetch = (url) => {
       .catch(() => setRequestState('FAILED'));
   }, [url]);
 
-  return [requestState, requestResponse];
+  return [requestState, requestResponse, setRequestResponse];
 };
