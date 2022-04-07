@@ -20,7 +20,7 @@ export const useFetch = (url) => {
       .catch(() => setRequestState('FAILED'));
   }, [url]);
 
-  const updateRequest = async (id, request) => {
+  const patchRequest = async (id, request) => {
     await fetch(`${process.env.REACT_APP_API_ENDPOINT}/${id}`, {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
@@ -32,7 +32,7 @@ export const useFetch = (url) => {
     });
   };
 
-  const addRequest = async (request) => {
+  const postRequest = async (request) => {
     const response = await fetch(`${process.env.REACT_APP_API_ENDPOINT}`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -45,5 +45,5 @@ export const useFetch = (url) => {
     });
   };
 
-  return [requestState, requestResponse, updateRequest, addRequest];
+  return [requestState, requestResponse, patchRequest, postRequest];
 };
