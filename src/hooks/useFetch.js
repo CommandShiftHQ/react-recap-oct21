@@ -6,6 +6,8 @@ export const useFetch = (url) => {
 
   useEffect(() => {
     if (!url) {
+      setRequestState('INITIAL');
+      setRequestResponse(undefined);
       return;
     }
 
