@@ -1,13 +1,26 @@
+import { useState, useEffect } from 'react';
+
 import Loading from './components/Loading';
 import Error from './components/Error';
 import TaskList from './components/TaskList';
+import Header from './components/Header';
 
 import { useFetch } from './hooks/useFetch';
+import { useAuth } from './providers/Auth';
 
 const App = () => {
-  const [state, tasks, update, add] = useFetch(
-    process.env.REACT_APP_API_ENDPOINT,
-  );
+  const { currentUser } = useAuth();
+  const [url, setUrl] = useState();
+  const [state, tasks, update, add] = useFetch(url);
+
+  useEffect(() => {
+    if (!currentUser) {
+      setUrl(undefined);
+      return;
+    }
+
+    setUrl(`${process.env.REACT_APP_API_ENDPOINT}?userId=${currentUser}`);
+  }, [currentUser]);
 
   const updateTask = (task) => {
     update(task.id, task);
@@ -19,7 +32,7 @@ const App = () => {
 
   return (
     <>
-      <h1>TODO List</h1>
+      <Header />
       {state === 'PENDING' && <Loading />}
       {state === 'SUCCESS' && (
         <TaskList tasks={tasks} updateTask={updateTask} addTask={addTask} />
