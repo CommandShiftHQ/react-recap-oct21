@@ -1,6 +1,7 @@
 import Loading from './components/Loading';
 import Error from './components/Error';
 import TaskList from './components/TaskList';
+import Header from './components/Header';
 
 import { useFetch } from './hooks/useFetch';
 
@@ -19,7 +20,7 @@ const App = () => {
 
   return (
     <>
-      <h1>TODO List</h1>
+      <Header />
       {state === 'PENDING' && <Loading />}
       {state === 'SUCCESS' && (
         <TaskList tasks={tasks} updateTask={updateTask} addTask={addTask} />
