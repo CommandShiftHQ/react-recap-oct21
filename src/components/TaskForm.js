@@ -1,7 +1,7 @@
-import { useInput } from '../hooks/useInput';
+import { useForm } from '../hooks/useForm';
 
 const TaskForm = ({ addTask }) => {
-  const [{ task }, update, reset] = useInput({ task: '' });
+  const [{ task }, update, reset] = useForm({ task: '' });
 
   const handleInputChange = (event) => {
     update(event);
