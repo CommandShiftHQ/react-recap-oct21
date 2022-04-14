@@ -3,6 +3,8 @@ import {
   getAuth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  signInWithPopup,
+  GoogleAuthProvider,
 } from 'firebase/auth';
 
 import { app } from '../firebase';
@@ -25,6 +27,11 @@ export const AuthenticationProvider = ({ children }) => {
     return auth.signOut();
   };
 
+  const signInWithGoogle = () => {
+    const provider = new GoogleAuthProvider();
+    return signInWithPopup(auth, provider);
+  };
+
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
       setCurrentUser(user);
@@ -36,6 +43,7 @@ export const AuthenticationProvider = ({ children }) => {
     signUp,
     signIn,
     signOut,
+    signInWithGoogle,
   };
 
   return (

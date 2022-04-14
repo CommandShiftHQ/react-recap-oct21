@@ -5,6 +5,10 @@ import SignOut from './SignOut';
 const Header = () => {
   const { currentUser } = useAuthentication();
 
+  if (currentUser === undefined) {
+    return null;
+  }
+
   return (
     <>
       <h1>TODO List</h1>
