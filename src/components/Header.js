@@ -12,7 +12,15 @@ const Header = () => {
   return (
     <>
       <h1>TODO List</h1>
-      {currentUser ? <SignOut /> : <AuthenticationMethod />}
+      {currentUser ? (
+        <>
+          <SignOut />
+          {currentUser.displayName && <p>Hi {currentUser.displayName}</p>}
+          {currentUser.photoURL && <img src={currentUser.photoURL} />}
+        </>
+      ) : (
+        <AuthenticationMethod />
+      )}
     </>
   );
 };
