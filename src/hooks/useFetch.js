@@ -5,6 +5,10 @@ export const useFetch = (url) => {
   const [requestState, setRequestState] = useState('INITIAL');
 
   useEffect(() => {
+    if (!url) {
+      return;
+    }
+
     setRequestState('PENDING');
 
     fetch(url)
@@ -16,5 +20,30 @@ export const useFetch = (url) => {
       .catch(() => setRequestState('FAILED'));
   }, [url]);
 
-  return [requestState, requestResponse];
+  const patchRequest = async (id, request) => {
+    await fetch(`${process.env.REACT_APP_API_ENDPOINT}/${id}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(request),
+    });
+
+    setRequestResponse((previous) => {
+      return previous.map((object) => (object.id === id ? request : object));
+    });
+  };
+
+  const postRequest = async (request) => {
+    const response = await fetch(`${process.env.REACT_APP_API_ENDPOINT}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(request),
+    });
+    const json = await response.json();
+
+    setRequestResponse((previous) => {
+      return [...previous, json];
+    });
+  };
+
+  return [requestState, requestResponse, patchRequest, postRequest];
 };
